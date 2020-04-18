@@ -30,10 +30,11 @@ namespace QuotesAPI
         {
             services.AddControllers();
             services.AddDbContext<QuotesDbContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QuotesDb"));
+            services.AddMvc().AddXmlSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, QuotesDbContext quotesDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -41,7 +42,7 @@ namespace QuotesAPI
             }
 
             app.UseHttpsRedirection();
-            quotesDbContext.Database.EnsureCreated();
+            //quotesDbContext.Database.Migrate();
 
             app.UseRouting();
 
